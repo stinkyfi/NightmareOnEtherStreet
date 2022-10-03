@@ -12,7 +12,7 @@ async function main() {
   console.log("Account balance:", (await deployer.getBalance()).toString());
 
   let NOES = await ethers.getContractFactory("NightmareOnEtherStreet");
-  NOES = await NOES.deploy();
+  NOES = await NOES.deploy(deployer.address);
   await NOES.deployed();
 
   console.log("\n -- Nightmare On Ether Street --\n");
