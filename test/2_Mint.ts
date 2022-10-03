@@ -18,12 +18,12 @@ describe("Test Minting", function () {
         NOES = await NOES.deploy();
         await NOES.deployed();
 
-        await NOES.toggleMintOpen();
+        await NOES.updateHaunting();
     });
 
 
     it("Mint 5", async function () {
-        await NOES.connect(addr1).mint(5);
+        await NOES.connect(addr1).claim(5);
 
         expect(await NOES.totalSupply()).to.equal(5);
         expect(await NOES.ownerOf(0)).to.equal(addr1.address);
@@ -34,8 +34,8 @@ describe("Test Minting", function () {
     });
 
     it("Mint 30", async function () {
-        await NOES.connect(addr2).mint(30);
-
+        await NOES.connect(addr2).claim(30);
+ 
         expect(await NOES.totalSupply()).to.equal(30);
         expect(await NOES.ownerOf(0)).to.equal(addr2.address);
         expect(await NOES.ownerOf(1)).to.equal(addr2.address);
@@ -46,13 +46,13 @@ describe("Test Minting", function () {
     });
 
     it("Group Mint 200", async function () {
-        await NOES.mint(30);
-        await NOES.connect(addr1).mint(30);        
-        await NOES.connect(addr2).mint(30);
-        await NOES.mint(30);
-        await NOES.connect(addr1).mint(30);        
-        await NOES.connect(addr2).mint(30);
-        await NOES.mint(20);
+        await NOES.claim(30);
+        await NOES.connect(addr1).claim(30);        
+        await NOES.connect(addr2).claim(30);
+        await NOES.claim(30);
+        await NOES.connect(addr1).claim(30);        
+        await NOES.connect(addr2).claim(30);
+        await NOES.claim(20);
 
         expect(await NOES.totalSupply()).to.equal(200);
         expect(await NOES.balanceOf(addr1.address)).to.equal(60);

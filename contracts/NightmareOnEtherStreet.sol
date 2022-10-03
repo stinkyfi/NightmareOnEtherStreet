@@ -11,43 +11,54 @@ import "erc721a/contracts/ERC721A.sol";
 
 contract NightmareOnEtherStreet is ERC721A, Ownable   {
 
-    /// @dev Minting Open/Close Flag
-    bool public mintOpen;
-    /// @dev Mint Price
-    uint256 public mintPrice = 0.006 ether;
     /// @dev Max Supply
     uint256 immutable public maxSupply = 6669;
+    /// @dev Minting Open/Close Flag
+    bool public witchingHour;
+    /// @dev Mint Price
+    uint256 public price = 0.006 ether;
+    /// @dev baseURI for NFT Metadata
+    string public baseURI;
 
     /// @dev Throw if Minting is Closed
     error MintingClosed();
     /// @dev Throw if NFT is Minted Out
     error MintedOut();
     /// @dev Minting Status was Updated
-    event statusChange(bool);
+    event StatusChange(bool);
 
     constructor() ERC721A("Nightmare On Ether Street", "NOES") 
     {
-        mintOpen = false;
+        witchingHour = false;
+        baseURI = "";
     }
 
     /// @dev Public Mint NOES NFTs
     /// @param quantity Number of NFTs to mint
-    function mint(uint256 quantity) external payable {
-        if(!mintOpen) { revert MintingClosed(); }
+    function claim(uint256 quantity) external payable {
+        if(!witchingHour) { revert MintingClosed(); }
         if(_totalMinted() + quantity > maxSupply) { revert MintedOut(); }
         _mint(msg.sender, quantity);
     }
 
-    /// @notice Toggles the mint status from on/off
-    function toggleMintOpen() external onlyOwner {
-        if(mintOpen)
-            emit statusChange(true);
+    /// @dev Toggles the mint status from on/off
+    function updateHaunting() external onlyOwner {
+        if(witchingHour)
+            emit StatusChange(true);
         else
-            emit statusChange(false);        
-        mintOpen = !mintOpen;
+            emit StatusChange(false);        
+        witchingHour = !witchingHour;
     }
 
+    /// @dev Returns TokenURI for Marketplaces
+    /// @param tokenId The ID of the Token you want Metadata for
+    function tokenURI(uint256 tokenId) override public view returns (string memory) {
+        return string(abi.encodePacked(baseURI, _toString(tokenId)));
+    }
+
+    /// @dev Update the Mint Price
+    /// @param newPrice The new price of Mint
     function updatePrice(uint256 newPrice) external onlyOwner {
-        mintPrice = newPrice;
+        price = newPrice;
     }
 }

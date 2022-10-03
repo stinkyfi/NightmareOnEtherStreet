@@ -20,8 +20,8 @@ describe("Deploy & Initiliaze", function () {
   });
 
   it("Validate Deployment", async function () {
-    expect(await NOES.mintPrice()).to.be.equal(ethers.utils.parseEther("0.006"));
+    expect(await NOES.price()).to.be.equal(ethers.utils.parseEther("0.006"));
     expect(await NOES.owner()).to.be.equal(owner.address);
-    expect(await NOES.mintOpen()).to.be.equal(false);
+    expect(await NOES.witchingHour()).to.be.equal(false);
   });
 });
