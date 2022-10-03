@@ -2,6 +2,26 @@
 
 ## NightmareOnEtherStreet
 
+Version 0.1
+
+_NOES is just a fun NFT that can be minted through our intereactive Trick-Or-Treating dApp._
+
+### baseURI
+
+```solidity
+string baseURI
+```
+
+_baseURI for NFT Metadata_
+
+### beneficiary
+
+```solidity
+address beneficiary
+```
+
+_Beneficiary Address_
+
 ### maxSupply
 
 ```solidity
@@ -9,14 +29,6 @@ uint256 maxSupply
 ```
 
 _Max Supply_
-
-### witchingHour
-
-```solidity
-bool witchingHour
-```
-
-_Minting Open/Close Flag_
 
 ### price
 
@@ -26,13 +38,21 @@ uint256 price
 
 _Mint Price_
 
-### baseURI
+### witchingHour
 
 ```solidity
-string baseURI
+bool witchingHour
 ```
 
-_baseURI for NFT Metadata_
+_Minting Open/Close Flag_
+
+### InsufficientFuends
+
+```solidity
+error InsufficientFuends()
+```
+
+_Throw if invalid payment amount_
 
 ### MintingClosed
 
@@ -61,7 +81,7 @@ _Minting Status was Updated_
 ### constructor
 
 ```solidity
-constructor() public
+constructor(address benef) public
 ```
 
 ### claim
@@ -100,6 +120,12 @@ _Returns TokenURI for Marketplaces_
 | ---- | ---- | ----------- |
 | tokenId | uint256 | The ID of the Token you want Metadata for |
 
+#### Return Values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | string | Link to Metadata |
+
 ### updatePrice
 
 ```solidity
@@ -113,4 +139,12 @@ _Update the Mint Price_
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | newPrice | uint256 | The new price of Mint |
+
+### withdraw
+
+```solidity
+function withdraw() external
+```
+
+Withdraw funds
 
