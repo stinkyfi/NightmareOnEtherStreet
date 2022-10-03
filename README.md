@@ -21,7 +21,7 @@ npm install
 Make a copy of the sample hardhat config file, git ignores the hardhatconfig file.
 This file is sensitive, because it may contain private keys
 ```sh
-cp sample.hardhat.config.js hardhat.config.js
+cp sample.hardhat.config.ts hardhat.config.ts
 ```
 
 ## Test
@@ -37,5 +37,5 @@ On a new terminal, go to the repository's root folder and run this to
 deploy the contract test:
 
 ```sh
-npx hardhat run scripts/deploy_test.js --network <network>
+npx hardhat run scripts/deploy.ts --network <network>
 ```
