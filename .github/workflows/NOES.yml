@@ -1,4 +1,4 @@
-name: Hardhat Test
+name: Nightmare On Ether Street Tests
 
 on:
   pull_request:

@@ -15,9 +15,13 @@ contract NightmareOnEtherStreet is ERC721A, Ownable   {
     bool public mintOpen;
     /// @dev Mint Price
     uint256 public mintPrice = 0.006 ether;
+    /// @dev Max Supply
+    uint256 immutable public maxSupply = 6669;
+
     /// @dev Throw if Minting is Closed
     error MintingClosed();
-
+    /// @dev Throw if NFT is Minted Out
+    error MintedOut();
     /// @dev Minting Status was Updated
     event statusChange(bool);
 
@@ -30,6 +34,7 @@ contract NightmareOnEtherStreet is ERC721A, Ownable   {
     /// @param quantity Number of NFTs to mint
     function mint(uint256 quantity) external payable {
         if(!mintOpen) { revert MintingClosed(); }
+        if(_totalMinted() + quantity > maxSupply) { revert MintedOut(); }
         _mint(msg.sender, quantity);
     }
 
@@ -40,5 +45,9 @@ contract NightmareOnEtherStreet is ERC721A, Ownable   {
         else
             emit statusChange(false);        
         mintOpen = !mintOpen;
+    }
+
+    function updatePrice(uint256 newPrice) external onlyOwner {
+        mintPrice = newPrice;
     }
 }
