@@ -1,4 +1,4 @@
-name: Nightmare On Ether Street Tests
+name: Automated Tests
 
 on:
   pull_request:
