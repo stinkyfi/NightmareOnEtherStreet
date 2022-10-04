@@ -15,7 +15,7 @@ describe("Deploy & Initiliaze", function () {
     [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
 
     //Deploy KerberusVault.sol
-    NOES = await NOES.deploy();
+    NOES = await NOES.deploy(addr2.address);
     await NOES.deployed();
   });
 
