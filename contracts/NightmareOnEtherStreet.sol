@@ -1,14 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.15;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
 import "erc721a/contracts/ERC721A.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 /// @title Nightmare On Ether Street
 /// @author Stinky
 /// @notice Version 0.1
 /// @dev NOES is just a fun NFT that can be minted through our intereactive Trick-Or-Treating dApp.
-contract NightmareOnEtherStreet is ERC721A, Ownable {
+contract NightmareOnEtherStreet is ERC721A, Ownable, ReentrancyGuard {
 
     /// @dev baseURI for NFT Metadata
     string public baseURI;
@@ -68,8 +69,8 @@ contract NightmareOnEtherStreet is ERC721A, Ownable {
         price = newPrice;
     }
 
-    /// @notice Withdraw funds
-    function withdraw() external onlyOwner {
+    /// @dev Withdraw funds
+    function withdraw() external onlyOwner nonReentrant  {
         payable(beneficiary).transfer(address(this).balance);
     }
 }
